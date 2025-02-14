@@ -1,6 +1,6 @@
 # Adoption Center - Sistema de Adopcion de Mascotas
 
-## Índice
+## Indice
 
 1. [Descripcion del Proyecto](#descripcion-del-proyecto)
 2. [Objetivo del Proyecto](#objetivo-del-proyecto)
@@ -13,26 +13,26 @@
 ---
 
 ## Descripcion del Proyecto
-El Adoption Center es una plataforma diseñada para gestionar el proceso de adopcion de mascotas. Permite a los usuarios (administradores y adoptantes) visualizar, registrar y administrar mascotas disponibles para adopcion, además de gestionar los usuarios y solicitudes de adopcion.
+El con el fin de mejorar la infraestructura de un refugio de animales se ha planteado un "Sistema de Adopcion de Mascotas" como una plataforma diseñada  para gestionar el proceso de adopcion de mascotas. Permitiendo a los usuarios (administradores y adoptantes) visualizar , registrar y administrar mascotas disponibles para adopcion,  ademas de gestionar los usuarios y solicitudes de adopcion.
 
-Este sistema está basado en Django REST Framework y utiliza MongoDB Atlas como base de datos, con un backend alojado en un servidor local.
+El sistema esta basado en Django REST Framework y utiliza MongoDB Atlas como base de datos, con un backend alojado en un servidor local.
 
 ---
 
 ## Objetivo del Proyecto
-El objetivo principal del Adoption Center es proporcionar un sistema eficiente y accesible que facilite la gestion de adopciones, mejorando la experiencia de los usuarios y garantizando la transparencia en los procesos.
+El objetivo principal del refugio es proporcionar un sistema eficiente y accesible que facilite la gestion de adopciones , mejorando la experiencia de los usuarios y asi como que el proceso se lleve de manera sencilla.
 
 ### Funciones clave:
-- Registro y gestion de usuarios (adoptantes y administradores).
-- Gestion de mascotas (registro, actualizacion y eliminacion).
-- Creacion y control de solicitudes de adopcion.
-- Autenticacion y permisos basados en roles.
-- API REST para interaccion con aplicaciones externas.
+Registro y gestion de usuarios (adoptantes y administradores).
+Gestion de mascotas (registro, actualizacion y eliminacion).
+Creacion y control de solicitudes de adopcion.
+Autenticacion y permisos basados en roles.
+API REST para interaccion con aplicaciones externas.
 
 ---
 
 ## Arquitectura del Proyecto
-El sistema sigue un modelo basado en microservicios utilizando Django y Django REST Framework (DRF). La base de datos está en MongoDB Atlas y el servidor se ejecuta localmente.
+El sistema sigue un modelo basado en microservicios utilizando Django y Django REST Framework (DRF). La base de datos esta en MongoDB Atlas y el servidor se ejecuta localmente.
 
 ![Arquitectura del Proyecto](images/arquitectura.png)
 
@@ -100,8 +100,8 @@ DELETE /api/adoptions/{id}/ - Cancela una solicitud de adopción (solo administr
 ## Seguridad y Permisos
 El sistema maneja autenticación y permisos mediante JWT y permisos personalizados:
 
-Usuarios anónimos: Solo pueden ver mascotas disponibles.
-Usuarios autenticados: Pueden hacer solicitudes de adopción.
+Usuarios anonimos: Solo pueden ver mascotas disponibles.
+Usuarios autenticados: Pueden hacer solicitudes de adopcion
 Administradores: Pueden gestionar usuarios, mascotas y adopciones.
 
 
