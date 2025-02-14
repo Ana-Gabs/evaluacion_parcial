@@ -1,3 +1,4 @@
+# ./adoption_center/settings.py
 """
 Django settings for adoption_center project.
 
@@ -11,6 +12,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+from mongoengine import connect
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authentication',
+    'users',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'pets',
+    'adoptions',
 ]
 
 MIDDLEWARE = [
@@ -73,12 +86,32 @@ WSGI_APPLICATION = 'adoption_center.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'Gabs',
+        'CLIENT': {
+            'host': 'mongodb+srv://2022371069:V19149z00@cluster0.remor.mongodb.net/Gabs?retryWrites=true&w=majority&appName=Cluster0',
+            'tls': True
+        }
     }
 }
+
+
+connect(
+    db="Gabs",
+    username="2022371069",
+    password="DEeinRmGwlVoUH74",
+    host="mongodb+srv://2022371069:V19149z00@cluster0.remor.mongodb.net/Gabs?retryWrites=true&w=majority&appName=Cluster0",
+    alias="default",
+)
 
 
 # Password validation
@@ -121,3 +154,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # Default is 5 minutes
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Default is 1 day
+    # Additional settings can be configured here
+}
