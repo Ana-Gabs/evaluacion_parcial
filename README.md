@@ -20,11 +20,9 @@ Este sistema está basado en Django REST Framework y utiliza MongoDB Atlas como 
 ---
 
 ## Objetivo del Proyecto
-
 El objetivo principal del Adoption Center es proporcionar un sistema eficiente y accesible que facilite la gestion de adopciones, mejorando la experiencia de los usuarios y garantizando la transparencia en los procesos.
 
 ### Funciones clave:
-
 - Registro y gestion de usuarios (adoptantes y administradores).
 - Gestion de mascotas (registro, actualizacion y eliminacion).
 - Creacion y control de solicitudes de adopcion.
@@ -34,8 +32,9 @@ El objetivo principal del Adoption Center es proporcionar un sistema eficiente y
 ---
 
 ## Arquitectura del Proyecto
-
 El sistema sigue un modelo basado en microservicios utilizando Django y Django REST Framework (DRF). La base de datos está en MongoDB Atlas y el servidor se ejecuta localmente.
+
+![Arquitectura del Proyecto](images/arquitectura.png)
 
 ---
 
