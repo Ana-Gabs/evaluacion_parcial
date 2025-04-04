@@ -22,7 +22,9 @@ from django.urls import re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('authentication.urls')),  
+    path('auth/', include('authentication.urls')),
     path('users/', include('users.urls')),
+    path('pets/', include('pets.urls')), 
+    path('adoptions/', include('adoptions.urls')), 
 
 ]

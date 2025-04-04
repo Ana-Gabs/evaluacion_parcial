@@ -38,8 +38,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer  # Usa el serializador de registro
-    permission_classes = [IsAdminOrEmpleado]  # Permitir el registro sin autenticación
-
+    #permission_classes = [IsAdminOrEmpleado]  # Permitir el registro sin autenticación
+    permission_classes = [AllowAny] 
+    
     def post(self, request, *args, **kwargs):
         print(request.data)  # Imprimir los datos del registro para depuración
         return super().post(request, *args, **kwargs)

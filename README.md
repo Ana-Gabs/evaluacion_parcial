@@ -1,4 +1,4 @@
-# Adoption Center - Sistema de Adopcion de Mascotas
+# Adoption Center - Sistema de Adopción de Mascotas
 
 ## Indice
 
@@ -20,7 +20,8 @@ El sistema esta basado en Django REST Framework y utiliza MongoDB Atlas como bas
 ---
 
 ## Objetivo del Proyecto
-El objetivo principal del refugio es proporcionar un sistema eficiente y accesible que facilite la gestion de adopciones , mejorando la experiencia de los usuarios y asi como que el proceso se lleve de manera sencilla.
+El objetivo principal del refugio es proporcionar un sistema eficiente y accesible que facilite la gestion de adopciones, mejorando la experiencia de los usuarios y que el proceso se lleve de manera sencilla.
+
 
 ### Funciones clave:
 Registro y gestion de usuarios (adoptantes y administradores).

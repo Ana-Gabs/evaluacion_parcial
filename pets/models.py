@@ -7,7 +7,7 @@ class Pet(models.Model):
     breed = models.CharField(max_length=100, blank=True, null=True)
     age = models.PositiveIntegerField()
     description = models.TextField(blank=True, null=True)
-    is_available = models.BooleanField(default=True)  # Si está disponible para adopción
+    is_available = models.BooleanField(default=True)  # Si se encuentra disponible para adopción
     created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)  # Quién agregó la mascota
     created_at = models.DateTimeField(auto_now_add=True)
 

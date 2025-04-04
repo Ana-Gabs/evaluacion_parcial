@@ -14,10 +14,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from mongoengine import connect
-import os
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tx$(()*nwdo(@*^(9_@b-4o#bd*#vrtjbwbqdmml3fxpyoy=#!'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -96,23 +98,21 @@ WSGI_APPLICATION = 'adoption_center.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'Gabs',
+        'NAME': os.getenv("DB_NAME"),
         'CLIENT': {
-            'host': 'mongodb+srv://2022371069:V19149z00@cluster0.remor.mongodb.net/Gabs?retryWrites=true&w=majority&appName=Cluster0',
+            'host': os.getenv("DB_HOST"),
             'tls': True
         }
     }
 }
 
-
 connect(
-    db="Gabs",
-    username="2022371069",
-    password="DEeinRmGwlVoUH74",
-    host="mongodb+srv://2022371069:V19149z00@cluster0.remor.mongodb.net/Gabs?retryWrites=true&w=majority&appName=Cluster0",
+    db=os.getenv("DB_NAME"),
+    username=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    host=os.getenv("DB_HOST"),
     alias="default",
 )
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -165,7 +165,15 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.CustomUser'
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # Default is 5 minutes
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),  # Default is 5 minutes
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Default is 1 day
     # Additional settings can be configured here
 }
+
+
+AUTHENTICATION_BACKENDS = [
+    'authentication.backends.EmailOrUsernameModelBackend',  # Nuestro backend personalizado
+    'django.contrib.auth.backends.ModelBackend',  # Backend de Django por defecto
+]
+
+
