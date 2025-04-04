@@ -27,3 +27,4 @@ class PetDeleteView(generics.DestroyAPIView):
     queryset = Pet.objects.all()
     serializer_class = PetSerializer
     permission_classes = [IsAdminOnly]
+

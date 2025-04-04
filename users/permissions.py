@@ -47,3 +47,11 @@ class BasePedidoPermission(permissions.BasePermission):
             return is_admin or (is_empleado and obj.usuario == request.user)
 
         return True  # Para otros métodos, usa las reglas generales
+
+
+class PublicUserListPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        # Permitir GET en la lista de usuarios, pero no en detalles
+        if request.method == "GET" and not view.detail:
+            return True
+        return request.user and request.user.is_authenticated

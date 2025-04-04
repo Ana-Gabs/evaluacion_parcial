@@ -1,9 +1,9 @@
+# ./user/views.py
 from rest_framework import viewsets
 from .models import CustomUser
 from .serializers import UserSerializer, RegisterSerializer
-# ./user/views.py
 from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import permissions
 from .permissions import IsAdminOrEmpleado  # Importamos el nuevo permiso personalizado
 
@@ -22,18 +22,21 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = CustomUser.objects.all()  # Obtiene todos los usuarios
     serializer_class = UserSerializer  # Usa el serializador de usuarios
-    permission_classes = [IsAdminOrEmpleado]  # Aplicamos el permiso personalizado
+    #permission_classes = [IsAdminOrEmpleado]  # Aplicamos el permiso personalizado
+    #permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny] 
 
     def get_permissions(self):
         """
         Ajusta los permisos según el método HTTP.
         """
-        if self.action == 'list':  # Acción GET -> Sin autenticación
-            return [AllowAny()]  # Permitir acceso sin autenticación
-        elif self.action == 'create':  # Acción POST -> Con autenticación
-            return [IsAuthenticated()]  # Solo usuarios autenticados pueden crear usuarios
-        else:
-            return super().get_permissions()  # Usar permisos por defecto para otras acciones
+        return [AllowAny()] 
+        #if self.action == 'list':  # Acción GET -> Sin autenticación
+        #    return [AllowAny()]  # Permitir acceso sin autenticación
+        #elif self.action == 'create':  # Acción POST -> Con autenticación
+        #    return [IsAuthenticated()]  # Solo usuarios autenticados pueden crear usuarios
+        #else:
+        #    return super().get_permissions()  # Usar permisos por defecto para otras acciones
         
 
 class RegisterView(generics.CreateAPIView):
@@ -44,3 +47,4 @@ class RegisterView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         print(request.data)  # Imprimir los datos del registro para depuración
         return super().post(request, *args, **kwargs)
+    

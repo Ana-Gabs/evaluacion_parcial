@@ -1,4 +1,17 @@
 services:
+  envoy:
+    image: envoyproxy/envoy:v1.23-latest
+    container_name: envoy_proxy
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml:ro  
+    ports:
+      - "10000:10000"  
+      - "9901:9901"    
+    depends_on:
+      - django_project1
+      - django_project2
+    networks:
+      - my_network
 
   django_project1:
     container_name: adoption_center
@@ -17,7 +30,6 @@ services:
     command: gunicorn adoption_center.wsgi:application --bind 0.0.0.0:8001
     networks:
       - my_network
-
 
 networks:
   my_network:
