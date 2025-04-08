@@ -95,24 +95,36 @@ WSGI_APPLICATION = 'adoption_center.wsgi.application'
 #    }
 # }
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'djongo',
+#        'NAME': os.getenv("DB_NAME"),
+#        'CLIENT': {
+#            'host': os.getenv("DB_HOST"),
+#            'tls': True
+#        }
+#    }
+#}
+
+#connect(
+#    db=os.getenv("DB_NAME"),
+#    username=os.getenv("DB_USER"),
+#    password=os.getenv("DB_PASSWORD"),
+#    host=os.getenv("DB_HOST"),
+#    alias="default",
+#)
+
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv("DB_NAME"),
-        'CLIENT': {
-            'host': os.getenv("DB_HOST"),
-            'tls': True
-        }
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST", "postgres_db"),
+        'PORT': os.getenv("DB_PORT", "5432"),
     }
 }
 
-connect(
-    db=os.getenv("DB_NAME"),
-    username=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-    host=os.getenv("DB_HOST"),
-    alias="default",
-)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
