@@ -8,3 +8,5 @@ echo "db.sqlite3" >> .gitignore
 
 # Archivos de MacOS
 .DS_Store
+
+.env
