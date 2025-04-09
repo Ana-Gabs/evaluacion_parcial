@@ -1,3 +1,4 @@
+# ./use/permissions.py
 from rest_framework import permissions
 
 class IsAdminOrEmpleado(permissions.BasePermission):

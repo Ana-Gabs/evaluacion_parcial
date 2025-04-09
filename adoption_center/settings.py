@@ -19,7 +19,8 @@ import os
 
 load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = 'Chismoso'
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -117,11 +118,11 @@ WSGI_APPLICATION = 'adoption_center.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST", "postgres_db"),
-        'PORT': os.getenv("DB_PORT", "5432"),
+        'NAME': 'db_adoption_center',
+        'USER': 'gaby_admin',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',  
+        'PORT': '5432',
     }
 }
 
