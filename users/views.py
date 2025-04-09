@@ -1,50 +1,22 @@
 # ./user/views.py
-from rest_framework import viewsets
-from .models import CustomUser
-from .serializers import UserSerializer, RegisterSerializer
-from rest_framework import generics
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
-from rest_framework import permissions
-from .permissions import IsAdminOrEmpleado  # Importamos el nuevo permiso personalizado
 
-# Definir el permiso personalizado
-class IsAdminOrReadOnly(permissions.BasePermission):
+from rest_framework import status, views
+from rest_framework.response import Response
+from .serializers import CustomUserSerializer
+
+class RegisterUserView(views.APIView):
     """
-    Permiso personalizado que permite solo a los administradores modificar
-    los recursos de usuario, pero todos los usuarios autenticados pueden verlos.
+    Vista para registrar un nuevo usuario.
     """
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    Vista para gestionar usuarios:
-    - "Viewer" puede solo ver usuarios.
-    - "Administrador" y "Empleado" pueden crear, actualizar y eliminar usuarios.
-    """
-    queryset = CustomUser.objects.all()  # Obtiene todos los usuarios
-    serializer_class = UserSerializer  # Usa el serializador de usuarios
-    #permission_classes = [IsAdminOrEmpleado]  # Aplicamos el permiso personalizado
-    #permission_classes = [IsAuthenticatedOrReadOnly]
-    permission_classes = [AllowAny] 
-
-    def get_permissions(self):
-        """
-        Ajusta los permisos según el método HTTP.
-        """
-        return [AllowAny()] 
-        #if self.action == 'list':  # Acción GET -> Sin autenticación
-        #    return [AllowAny()]  # Permitir acceso sin autenticación
-        #elif self.action == 'create':  # Acción POST -> Con autenticación
-        #    return [IsAuthenticated()]  # Solo usuarios autenticados pueden crear usuarios
-        #else:
-        #    return super().get_permissions()  # Usar permisos por defecto para otras acciones
-        
-
-class RegisterView(generics.CreateAPIView):
-    serializer_class = RegisterSerializer  # Usa el serializador de registro
-    #permission_classes = [IsAdminOrEmpleado]  # Permitir el registro sin autenticación
-    permission_classes = [AllowAny] 
-    
     def post(self, request, *args, **kwargs):
-        print(request.data)  # Imprimir los datos del registro para depuración
-        return super().post(request, *args, **kwargs)
-    
+        serializer = CustomUserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({
+                "message": "Usuario creado exitosamente",
+                "user": serializer.data
+            }, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

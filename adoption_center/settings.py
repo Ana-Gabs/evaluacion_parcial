@@ -181,7 +181,6 @@ AUTH_USER_MODEL = 'users.CustomUser'
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),  # Default is 5 minutes
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Default is 1 day
-    # Additional settings can be configured here
 }
 
 
