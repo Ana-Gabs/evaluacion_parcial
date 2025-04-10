@@ -33,15 +33,17 @@ class BasePedidoPermission(permissions.BasePermission):
             return True  # Todos los autenticados pueden ver
 
         # Solo Admin y Empleado pueden hacer POST, PUT, DELETE
-        is_admin = request.user.groups.filter(name="Administrador").exists()
-        is_empleado = request.user.groups.filter(name="Empleado").exists()
+        is_admin = request.user.groups.filter(name="Admin").exists()
+        is_empleado = request.user.groups.filter(name="Employee").exists()
+
 
         return is_admin or is_empleado
 
     def has_object_permission(self, request, view, obj):
 
-        is_admin = request.user.groups.filter(name="Administrador").exists()
-        is_empleado = request.user.groups.filter(name="Empleado").exists()
+        is_admin = request.user.groups.filter(name="Admin").exists()
+        is_empleado = request.user.groups.filter(name="Employee").exists()
+
 
         if request.method == "DELETE":
             # Admin puede eliminar cualquier pedido, Empleado solo los suyos

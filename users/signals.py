@@ -9,8 +9,8 @@ from users.models import CustomUser  # Tu modelo de usuario personalizado
 def create_groups(sender, **kwargs):
     if sender.name == 'users':  # Se ejecuta solo cuando se migra la app 'users'
         # Definir los grupos
-        admin_group, created = Group.objects.get_or_create(name='Administrador')
-        empleado_group, created = Group.objects.get_or_create(name='Empleado')
+        admin_group, created = Group.objects.get_or_create(name='Admin')
+        empleado_group, created = Group.objects.get_or_create(name='Employee')
         viewer_group, created = Group.objects.get_or_create(name='Viewer')
 
         # Obtener permisos
