@@ -1,44 +1,41 @@
-# ./user/serializers.py
 from rest_framework import serializers
-from django.contrib.auth.models import Group
 from .models import CustomUser
+from django.contrib.auth.password_validation import validate_password
+from rest_framework.validators import UniqueValidator
 
-class CustomUserSerializer(serializers.ModelSerializer):
-    role = serializers.CharField(write_only=True)
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=CustomUser.objects.all())]
+    )
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    role = serializers.ChoiceField(choices=CustomUser.Roles.choices, required=False)  # Asegúrate de que sea opcional
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'second_last_name', 'role']
-        extra_kwargs = {'password': {'write_only': True}}
-
-    def validate(self, data):
-        """
-        Validaciones adicionales para el registro de un nuevo usuario.
-        """
-        if not data.get('first_name'):
-            raise serializers.ValidationError("El campo 'first_name' es obligatorio.")
-        if not data.get('last_name'):
-            raise serializers.ValidationError("El campo 'last_name' es obligatorio.")
-        return data
+        fields = [
+            'id',
+            'username',
+            'email',
+            'password',
+            'first_name',
+            'last_name',
+            'second_last_name',
+            'role'
+        ]
 
     def create(self, validated_data):
-        """
-        Crea el usuario y asigna el rol basado en el campo 'role'.
-        """
-        role = validated_data.get('role')
-        password = validated_data.pop('password')
+        # Si no se ha proporcionado un 'role', se asigna por defecto el rol 'Viewer'
+        role = validated_data.get('role', CustomUser.Roles.VIEWER)
 
-        # Crear el usuario
-        user = CustomUser.objects.create_user(**validated_data)
-        
-        # Asignar el grupo basado en el rol
-        try:
-            group = Group.objects.get(name=role)
-        except Group.DoesNotExist:
-            raise serializers.ValidationError(f"El rol '{role}' no existe.")
-        
-        user.groups.add(group)
-        user.set_password(password)
+        user = CustomUser(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            second_last_name=validated_data.get('second_last_name', ''),
+            role=role,  # Asigna el rol aquí
+        )
+        user.set_password(validated_data['password'])
         user.save()
-        
         return user
