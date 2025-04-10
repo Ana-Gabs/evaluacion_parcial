@@ -25,7 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        # Si no se ha proporcionado un 'role', se asigna por defecto el rol 'Viewer'
         role = validated_data.get('role', CustomUser.Roles.VIEWER)
 
         user = CustomUser(
@@ -34,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             second_last_name=validated_data.get('second_last_name', ''),
-            role=role,  # Asigna el rol aquí
+            role=role,
         )
         user.set_password(validated_data['password'])
         user.save()
