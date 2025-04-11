@@ -8,5 +8,6 @@ class UserRegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
-    def get_serializer_context(self):
-        return {'request': self.request}
+def get_serializer_context(self):
+    return {'request': self.request}
+

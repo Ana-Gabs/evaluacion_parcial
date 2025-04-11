@@ -1,3 +1,4 @@
+# ./user/serializers.py
 from rest_framework import serializers
 from .models import CustomUser
 from django.contrib.auth.password_validation import validate_password
@@ -9,7 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=CustomUser.objects.all())]
     )
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    role = serializers.ChoiceField(choices=CustomUser.Roles.choices, required=False)
 
     class Meta:
         model = CustomUser
@@ -23,6 +23,15 @@ class UserSerializer(serializers.ModelSerializer):
             'second_last_name',
             'role'
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Hacemos role opcional y sin required
+        self.fields['role'] = serializers.ChoiceField(
+            choices=CustomUser.Roles.choices,
+            required=False
+        )
 
     def validate_role(self, value):
         request = self.context.get('request')
@@ -39,7 +48,8 @@ class UserSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        role = serializers.ChoiceField(choices=CustomUser.Roles.choices, required=False, default=CustomUser.Roles.VIEWER)
+        # Si no vino rol, se pone Viewer por defecto
+        role = validated_data.get('role', CustomUser.Roles.VIEWER)
 
         user = CustomUser(
             username=validated_data['username'],
@@ -47,7 +57,7 @@ class UserSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             second_last_name=validated_data.get('second_last_name', ''),
-            role=role,
+            role=role
         )
         user.set_password(validated_data['password'])
         user.save()
