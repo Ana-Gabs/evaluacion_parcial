@@ -1,31 +1,10 @@
-# ./pets/views.py
-from rest_framework import generics
-from pets.models import Pet
-from pets.serializers import PetSerializer
-from users.permissions import IsAdminOrEmpleado, IsAdminOnly
-from rest_framework.permissions import IsAuthenticated
+# pets/views.py
+from rest_framework import viewsets
+from .models import Mascota
+from .serializers import MascotaSerializer
+from rest_framework.permissions import AllowAny  # Importa AllowAny
 
-# listar mascotas (todos los autenticados)
-class PetListView(generics.ListAPIView):
-    queryset = Pet.objects.all()
-    serializer_class = PetSerializer
-    permission_classes = [IsAuthenticated]
-
-# crear mascota (solo admin y empleado)
-class PetCreateView(generics.CreateAPIView):
-    queryset = Pet.objects.all()
-    serializer_class = PetSerializer
-    permission_classes = [IsAdminOrEmpleado]
-
-# editar mascota (solo admin y empleado)
-class PetUpdateView(generics.RetrieveUpdateAPIView):
-    queryset = Pet.objects.all()
-    serializer_class = PetSerializer
-    permission_classes = [IsAdminOrEmpleado]
-
-# eliminar mascota (solo admin)
-class PetDeleteView(generics.DestroyAPIView):
-    queryset = Pet.objects.all()
-    serializer_class = PetSerializer
-    permission_classes = [IsAdminOnly]
-
+class MascotaViewSet(viewsets.ModelViewSet):
+    queryset = Mascota.objects.all()
+    serializer_class = MascotaSerializer
+    permission_classes = [AllowAny]  # Permite acceso a todos los usuarios, autenticados o no   

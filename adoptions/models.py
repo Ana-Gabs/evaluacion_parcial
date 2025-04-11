@@ -1,10 +1,11 @@
 from django.db import models
 from users.models import CustomUser
-from pets.models import Pet
+from pets.models import Mascota
+
 
 class AdoptionRequest(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Persona que adopta
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)  # Mascota solicitada
+    pet = models.ForeignKey(Mascota, on_delete=models.CASCADE)  # Mascota solicitada
     status = models.CharField(
         max_length=20,
         choices=[('pending', 'Pendiente'), ('approved', 'Aprobado'), ('rejected', 'Rechazado')],
