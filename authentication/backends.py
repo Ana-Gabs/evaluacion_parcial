@@ -9,6 +9,7 @@ class EmailOrUsernameModelBackend(BaseBackend):
     """
 
     def authenticate(self, request, username=None, password=None, **kwargs):
+        
         try:
             # Buscar usuario por email si parece ser una dirección de correo
             if "@" in username:

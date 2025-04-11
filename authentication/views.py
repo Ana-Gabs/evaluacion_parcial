@@ -12,6 +12,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         token['email'] = user.email
         token['is_staff'] = user.is_staff
+        token['role'] = user.role  
         return token
 
 class CustomTokenObtainPairView(TokenObtainPairView):

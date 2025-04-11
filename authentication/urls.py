@@ -1,4 +1,4 @@
-## ./authentication/urls.py
+# ./authentication/urls.py
 from django.urls import path
 from .views import CustomTokenObtainPairView  # Asegúrate de importar la nueva vista
 from rest_framework_simplejwt.views import TokenRefreshView  
