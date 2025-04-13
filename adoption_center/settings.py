@@ -121,7 +121,7 @@ DATABASES = {
         'NAME': 'db_adoption_center',
         'USER': 'gaby_admin',
         'PASSWORD': '1234',
-        'HOST': 'localhost',  
+        'HOST': '172.18.0.2',  
         'PORT': '5432',
     }
 }
@@ -171,9 +171,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        #'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.permissions.AllowAny', 
-    )
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    ),
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -190,3 +198,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]

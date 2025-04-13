@@ -1,10 +1,9 @@
-## ./pets/urls.py
+# pets/views.py# pets/urls.py
 from django.urls import path
-from pets.views import PetListView, PetCreateView, PetUpdateView, PetDeleteView
+from .views import MascotaListCreateAPIView, MascotaRetrieveUpdateDestroyAPIView
 
 urlpatterns = [
-    path('list/', PetListView.as_view(), name='pet-list'),
-    path('create/', PetCreateView.as_view(), name='pet-create'),
-    path('update/<int:pk>/', PetUpdateView.as_view(), name='pet-update'),
-    path('delete/<int:pk>/', PetDeleteView.as_view(), name='pet-delete'),
+    path('api/', MascotaListCreateAPIView.as_view(), name='mascota_list_create'),
+    path('api/<int:pk>/', MascotaRetrieveUpdateDestroyAPIView.as_view(), name='mascota_detail'),
 ]
+

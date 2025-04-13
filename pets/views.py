@@ -1,10 +1,13 @@
 # pets/views.py
-from rest_framework import viewsets
+from rest_framework import generics
 from .models import Mascota
 from .serializers import MascotaSerializer
-from rest_framework.permissions import AllowAny  # Importa AllowAny
 
-class MascotaViewSet(viewsets.ModelViewSet):
+class MascotaListCreateAPIView(generics.ListCreateAPIView):
     queryset = Mascota.objects.all()
     serializer_class = MascotaSerializer
-    permission_classes = [AllowAny]  # Permite acceso a todos los usuarios, autenticados o no   
+
+class MascotaRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Mascota.objects.all()
+    serializer_class = MascotaSerializer
+
